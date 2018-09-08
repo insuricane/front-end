@@ -1,19 +1,20 @@
-const express = require("express");
-const docusign = require("docusign-esign");
+const express = require('express');
+const docusign = require('docusign-esign');
+
 const apiClient = new docusign.ApiClient();
 
 const app = express();
 const port = process.env.PORT || 3000;
-const host = process.env.HOST || "localhost";
+const host = process.env.HOST || 'localhost';
 
-const integratorKey = "ae30ea4e-3959-4d1c-b867-fcb57d2dc4df"; // An IK for a non-mobile docusign account
-const clientSecret = "b4dccdbe-232f-46cc-96c5-b2f0f7448f8f";
-const redirectUri = "http://localhost:3000/auth"; // This needs to be registered with the integrator key in your admin account
-const basePath = "https://demo.docusign.net/restapi";
+const integratorKey = 'ae30ea4e-3959-4d1c-b867-fcb57d2dc4df'; // An IK for a non-mobile docusign account
+const clientSecret = 'b4dccdbe-232f-46cc-96c5-b2f0f7448f8f';
+const redirectUri = 'http://localhost:3000/auth'; // This needs to be registered with the integrator key in your admin account
+const basePath = 'https://demo.docusign.net/restapi';
 
 const responseType = apiClient.OAuth.ResponseType.CODE; // Response type of code, to be used for the Auth code grant
 const scopes = [apiClient.OAuth.Scope.EXTENDED];
-const randomState = "*^.$DGj*)+}Jk"; // after successful login you should compare the value of URI decoded "state" query param with the one created here. They should match
+const randomState = '*^.$DGj*)+}Jk'; // after successful login you should compare the value of URI decoded "state" query param with the one created here. They should match
 
 // apiClient.setBasePath(basePath);
 //
@@ -67,24 +68,23 @@ const randomState = "*^.$DGj*)+}Jk"; // after successful login you should compar
 // });
 
 // instantiate a new EnvelopesApi and consoleViewRequest objects
-var envelopesApi = new docusign.EnvelopesApi();
-var viewRequest = new docusign.ConsoleViewRequest();
-viewRequest.returnUrl =
-  "https://demo.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=9f86f5d1-8901-415f-aff2-7e939e05815b&v=2&env=demo";
+const envelopesApi = new docusign.EnvelopesApi();
+const viewRequest = new docusign.ConsoleViewRequest();
+viewRequest.returnUrl = 'https://demo.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=9f86f5d1-8901-415f-aff2-7e939e05815b&v=2&env=demo';
 
 // call the CreateConsoleView API
 envelopesApi.createConsoleView(
   accountId,
   { consoleViewRequest: viewRequest },
-  function(error, consoleView, response) {
+  (error, consoleView) => {
     if (error) {
-      console.log("Error: " + error);
+      console.log(`Error: ${error}`);
       return;
     }
 
     if (consoleView) {
-      console.log("ViewUrl: " + JSON.stringify(consoleView));
+      console.log(`ViewUrl: ${JSON.stringify(consoleView)}`);
     }
     return JSON.stringify(consoleView);
-  }
+  },
 );

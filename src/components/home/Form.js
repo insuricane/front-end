@@ -93,7 +93,9 @@ class Form extends Component {
           </div>
         </div>
 
-        <Link to='/forecast'><button> Submit </button></Link>
+        <Link to="/forecast" type="button">
+          Submit
+        </Link>
 
         {
           (location && location.lat && location.lng) ? (

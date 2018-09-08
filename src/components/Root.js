@@ -1,6 +1,10 @@
 import React from 'react';
-import Home from './Home';
+import Home from './home/Home';
 
-const Root = () => (<Home />);
+const Root = () => (
+  <div className="container">
+    <Home />
+  </div>
+);
 
 export default Root;

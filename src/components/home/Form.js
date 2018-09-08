@@ -93,7 +93,7 @@ class Form extends Component {
           </div>
         </div>
 
-        <Link to="/forecast" type="button">
+        <Link to="/forecast" class="btn btn-primary">
           Submit
         </Link>
 

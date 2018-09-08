@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Input from '../forms/Input';
+import InputLocation from '../forms/InputLocation';
 
 class Form extends Component {
   constructor(props) {
@@ -8,10 +9,13 @@ class Form extends Component {
     this.state = {
       firstName: '',
       lastName: '',
-      assetsValue: null,
+      assetsValue: 0,
+      address: '',
+      location: {},
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeLocation = this.handleChangeLocation.bind(this);
   }
 
   handleChange(event) {
@@ -25,11 +29,19 @@ class Form extends Component {
     });
   }
 
+  handleChangeLocation(lat, lng) {
+    this.setState({
+      location: { lat, lng },
+    });
+  }
+
   render() {
     const {
       firstName,
       lastName,
       assetsValue,
+      address,
+      location,
     } = this.state;
 
     return (
@@ -66,7 +78,30 @@ class Form extends Component {
               handleChange={this.handleChange}
             />
           </div>
+
+          <div className="col-12 col-md-6">
+            <InputLocation
+              label="Address"
+              value={address}
+              name="address"
+              type="text"
+              handleChange={this.handleChange}
+              callback={this.handleChangeLocation}
+            />
+          </div>
         </div>
+
+        {
+          (location && location.lat && location.lng) ? (
+            <p>
+              {location.lat}
+              ,
+              {location.lng}
+            </p>
+          ) : (
+            null
+          )
+        }
       </form>
     );
   }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Input from '../forms/Input';
 import InputLocation from '../forms/InputLocation';
 
@@ -29,9 +30,10 @@ class Form extends Component {
     });
   }
 
-  handleChangeLocation(lat, lng) {
+  handleChangeLocation(lat, lng, address) {
     this.setState({
       location: { lat, lng },
+      address,
     });
   }
 
@@ -49,7 +51,7 @@ class Form extends Component {
         <div className="row">
           <div className="col-12 col-md-6">
             <Input
-              label="First name"
+              label="First Name"
               value={firstName}
               name="firstName"
               type="text"
@@ -59,7 +61,7 @@ class Form extends Component {
 
           <div className="col-12 col-md-6">
             <Input
-              label="Last name"
+              label="Last Name"
               value={lastName}
               name="lastName"
               type="text"
@@ -71,7 +73,7 @@ class Form extends Component {
         <div className="row">
           <div className="col-12 col-md-6">
             <Input
-              label="Worth of insurable assets (USD)"
+              label="Home Value (USD)"
               value={assetsValue}
               name="assetsValue"
               type="number"
@@ -91,6 +93,8 @@ class Form extends Component {
           </div>
         </div>
 
+        <Link to='/forecast'><button> Submit </button></Link>
+
         {
           (location && location.lat && location.lng) ? (
             <p>
@@ -102,6 +106,7 @@ class Form extends Component {
             null
           )
         }
+
       </form>
     );
   }

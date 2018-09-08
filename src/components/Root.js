@@ -1,13 +1,22 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Home from './home/Home';
+import Forecast from './Forecast';
 
 const Root = () => (
-  <div className="container">
-    <div className="row">
-      <div className="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
-        <Home />
-      </div>
+  <Router>
+    <div>
+      <Route exact path="/" component={Home} />
+      <Route path="/forecast" component={Forecast} />
+      <Route path="/topics" component={Topics} />
     </div>
+  </Router>
+
+);
+
+const Topics = ({ match }) => (
+  <div>
+    <h2>Topics</h2>
   </div>
 );
 

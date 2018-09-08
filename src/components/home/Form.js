@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import Input from '../forms/Input';
-import InputLocation from '../forms/InputLocation';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import Input from "../forms/Input";
+import InputLocation from "../forms/InputLocation";
 
 class Form extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      firstName: '',
-      lastName: '',
+      firstName: "",
+      lastName: "",
       assetsValue: 0,
-      address: '',
-      location: {},
+      address: "",
+      location: {}
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -20,31 +20,22 @@ class Form extends Component {
   }
 
   handleChange(event) {
-    const {
-      name,
-      value,
-    } = event.target;
+    const { name, value } = event.target;
 
     this.setState({
-      [name]: value,
+      [name]: value
     });
   }
 
   handleChangeLocation(lat, lng, address) {
     this.setState({
       location: { lat, lng },
-      address,
+      address
     });
   }
 
   render() {
-    const {
-      firstName,
-      lastName,
-      assetsValue,
-      address,
-      location,
-    } = this.state;
+    const { firstName, lastName, assetsValue, address, location } = this.state;
 
     return (
       <form>
@@ -93,20 +84,15 @@ class Form extends Component {
           </div>
         </div>
 
-        <Link to='/forecast'><button> Submit </button></Link>
+        <Link to="/forecast">
+          <button> Submit </button>
+        </Link>
 
-        {
-          (location && location.lat && location.lng) ? (
-            <p>
-              {location.lat}
-              ,
-              {location.lng}
-            </p>
-          ) : (
-            null
-          )
-        }
-
+        {location && location.lat && location.lng ? (
+          <p>
+            {location.lat},{location.lng}
+          </p>
+        ) : null}
       </form>
     );
   }

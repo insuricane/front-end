@@ -1,20 +1,9 @@
-import React from 'react';
-import Form from './home/Form';
-import GoogleMapReact from 'google-map-react';
-import { IconContext } from 'react-icons';
-import { GoHome } from 'react-icons/go';
+import React from "react";
+import MyMap from "./MyMap";
 
 const center = {
-  textAlign: 'center',
+  textAlign: "center"
 };
-
-const HouseComponent = () => (
-  <IconContext.Provider value={{ size: 28 }}>
-    <div>
-      <GoHome />
-    </div>
-  </IconContext.Provider>
-);
 
 const Forecast = () => (
   <div className="container">
@@ -25,16 +14,7 @@ const Forecast = () => (
             <h1>Insuricane</h1>
             <p>An emergency short-term home insurance product for hurricanes</p>
           </div>
-          <div style={{ height: '50vh', width: '100%'}}>
-            <GoogleMapReact
-              defaultCenter={{ lat: 40.7446790, lng: -73.9485420 }}
-              defaultZoom={ 11 }>
-              <HouseComponent
-                lat={ 40.7473310 }
-                lng={ -73.8517440 }
-              />
-            </GoogleMapReact>
-          </div>
+          <MyMap />
         </div>
       </div>
     </div>

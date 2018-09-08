@@ -1,11 +1,11 @@
-import React from 'react';
-import Form from './Form';
-import GoogleMapReact from 'google-map-react';
-import { IconContext } from 'react-icons';
-import { GoHome } from 'react-icons/go';
+import React from "react";
+import Form from "./Form";
+import GoogleMapReact from "google-map-react";
+import { IconContext } from "react-icons";
+import { GoHome } from "react-icons/go";
 
 const center = {
-  textAlign: 'center',
+  textAlign: "center"
 };
 
 const Home = () => (

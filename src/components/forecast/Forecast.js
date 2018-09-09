@@ -4,50 +4,75 @@ import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 
 import MyMap from './MyMap';
+import ForecastInfo from './ForecastInfo';
 import Container from '../shared/Container';
 
-const Forecast = ({ location, assetsValue }) => {
+import { clearUserState } from '../../actions/userActions';
+
+const rightStyles = {
+  float: 'right',
+};
+
+const Forecast = ({ location, positions, dispatchClearUserState }) => {
   if (!(location && location.lat && location.lng)) {
     return (<Redirect to="/" />);
   }
 
+  // Only show the link to continue if a portfolio was returned and we have
+  // finished loading all data
+  const shouldShowContinue = () => {
+    if (!positions) return false;
+
+    const tickers = Object.keys(positions);
+
+    return Boolean(tickers && tickers.length);
+  };
+
   return (
     <Container>
-      <p>
-        Policy value:
-        {assetsValue}
-      </p>
-
-      <p>Probability of destruction: TODO</p>
-      <p>Hedging portfolio: TODO</p>
+      <ForecastInfo />
 
       <MyMap />
 
-      <Link to="/accept" className="btn btn-light">
-        Continue &rarr;
-      </Link>
+      <div>
+        <div onClick={dispatchClearUserState} className="btn btn-light"> {/* eslint-disable-line */}
+          &larr; Start Over
+        </div>
+        {
+          shouldShowContinue() && (
+            <Link to="/accept" className="btn btn-light" style={rightStyles}>
+              Continue &rarr;
+            </Link>
+          )
+        }
+      </div>
     </Container>
   );
 };
 
-const mapStateToProps = ({ userState }) => ({
-  firstName: userState.firstName,
-  lastName: userState.lastName,
-  email: userState.email,
-  address: userState.address,
+const mapStateToProps = ({ userState, quoteState }) => ({
   location: userState.location,
-  assetsValue: userState.assetsValue,
+  positions: quoteState.positions,
 });
+
+const mapDispatchToProps = dispatch => ({
+  dispatchClearUserState: () => dispatch(clearUserState()),
+});
+
+Forecast.defaultProps = {
+  positions: {},
+};
 
 Forecast.propTypes = {
   location: PropTypes.shape({
     lng: PropTypes.number,
     lat: PropTypes.number,
   }).isRequired,
-  assetsValue: PropTypes.number.isRequired,
+  positions: PropTypes.object, // eslint-disable-line
 };
 
 // Redux config
 export default connect(
   mapStateToProps,
+  mapDispatchToProps,
 )(Forecast);

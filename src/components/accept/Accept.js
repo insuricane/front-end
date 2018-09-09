@@ -1,11 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import Container from '../shared/Container';
 
-const Accept = ({ location, assetsValue, firstName, lastName, email }) => {
+const Accept = ({
+  location,
+  firstName,
+  lastName,
+  email,
+}) => {
   if (!(location && location.lat && location.lng)) {
     return (<Redirect to="/" />);
   }
@@ -36,11 +41,9 @@ Accept.propTypes = {
     lng: PropTypes.number,
     lat: PropTypes.number,
   }).isRequired,
-  assetsValue: PropTypes.number.isRequired,
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired,
 };
 
 export default connect(

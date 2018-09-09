@@ -11,6 +11,7 @@ import './leaflet-providers';
 const mapStyles = {
   height: '500px',
   width: '100%',
+  marginBottom: '1rem',
 };
 
 const BLACK = '#000';

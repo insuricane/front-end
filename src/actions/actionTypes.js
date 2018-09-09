@@ -1,5 +1,6 @@
 // User actions
 export const SET_USER_STATE = 'SET_USER_STATE';
+export const CLEAR_USER_STATE = 'CLEAR_USER_STATE';
 
 // Quote actions
 export const GET_QUOTE_REQUESTED = 'GET_QUOTE_REQUESTED';

@@ -6,3 +6,9 @@ export function setUserState(state) { // eslint-disable-line
     state,
   };
 }
+
+export function clearUserState() {
+  return {
+    type: types.CLEAR_USER_STATE,
+  };
+}

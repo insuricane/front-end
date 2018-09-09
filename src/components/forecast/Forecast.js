@@ -7,12 +7,13 @@ import MyMap from './MyMap';
 import ForecastInfo from './ForecastInfo';
 import Container from '../shared/Container';
 
+import { clearUserState } from '../../actions/userActions';
+
 const rightStyles = {
-  width: '100%',
-  textAlign: 'right',
+  float: 'right',
 };
 
-const Forecast = ({ location, positions }) => {
+const Forecast = ({ location, positions, dispatchClearUserState }) => {
   if (!(location && location.lat && location.lng)) {
     return (<Redirect to="/" />);
   }
@@ -33,15 +34,18 @@ const Forecast = ({ location, positions }) => {
 
       <MyMap />
 
-      {
-        shouldShowContinue() && (
-          <div style={rightStyles}>
-            <Link to="/accept" className="btn btn-light">
+      <div>
+        <div onClick={dispatchClearUserState} className="btn btn-light"> {/* eslint-disable-line */}
+          &larr; Start Over
+        </div>
+        {
+          shouldShowContinue() && (
+            <Link to="/accept" className="btn btn-light" style={rightStyles}>
               Continue &rarr;
             </Link>
-          </div>
-        )
-      }
+          )
+        }
+      </div>
     </Container>
   );
 };
@@ -49,6 +53,10 @@ const Forecast = ({ location, positions }) => {
 const mapStateToProps = ({ userState, quoteState }) => ({
   location: userState.location,
   positions: quoteState.positions,
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatchClearUserState: () => dispatch(clearUserState()),
 });
 
 Forecast.defaultProps = {
@@ -66,4 +74,5 @@ Forecast.propTypes = {
 // Redux config
 export default connect(
   mapStateToProps,
+  mapDispatchToProps,
 )(Forecast);

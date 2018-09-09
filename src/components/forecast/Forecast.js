@@ -31,6 +31,10 @@ const Forecast = ({ location, assetsValue }) => {
 };
 
 const mapStateToProps = ({ userState }) => ({
+  firstName: userState.firstName,
+  lastName: userState.lastName,
+  email: userState.email,
+  address: userState.address,
   location: userState.location,
   assetsValue: userState.assetsValue,
 });

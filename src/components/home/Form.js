@@ -219,6 +219,10 @@ class Form extends Component {
 }
 
 const mapStateToProps = ({ userState }) => ({
+  firstName: userState.firstName,
+  lastName: userState.lastName,
+  email: userState.email,
+  address: userState.address,
   userLocation: userState.location,
 });
 

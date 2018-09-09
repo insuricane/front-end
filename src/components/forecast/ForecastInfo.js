@@ -45,16 +45,22 @@ class ForecastInfo extends Component {
 
         <ErrorMessage error={quoteError} />
 
-        <p>
-          <strong>Probability of destruction:</strong>
-          &nbsp;
-          {getPercent(probDestruction)}
-        </p>
+        {
+          !quoteError && (
+            <div>
+              <p>
+                <strong>Probability of destruction:</strong>
+                &nbsp;
+                {getPercent(probDestruction)}
+              </p>
 
-        <p>
-          <strong>Hedging portfolio:</strong>
-        </p>
-        <Portfolio />
+              <p>
+                <strong>Hedging portfolio:</strong>
+              </p>
+              <Portfolio />
+            </div>
+          )
+        }
       </div>
     );
   }

@@ -69,6 +69,7 @@ Forecast.propTypes = {
     lat: PropTypes.number,
   }).isRequired,
   positions: PropTypes.object, // eslint-disable-line
+  dispatchClearUserState: PropTypes.func.isRequired,
 };
 
 // Redux config

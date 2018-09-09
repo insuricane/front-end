@@ -4,6 +4,7 @@ import L from 'leaflet';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import Line from '../shared/Line';
 import path from './path';
 import cone from './cone';
 import './leaflet-providers';
@@ -112,7 +113,17 @@ class Map extends Component {
   }
 
   render() {
-    return <div id="map" style={mapStyles} />;
+    return (
+      <div>
+        <Line />
+
+        <p><strong>Map of your property:</strong></p>
+
+        <div id="map" style={mapStyles} />
+
+        <Line />
+      </div>
+    );
   }
 }
 

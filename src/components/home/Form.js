@@ -6,6 +6,8 @@ import { Redirect } from 'react-router-dom';
 import Input from '../forms/Input';
 import InputLocation from '../forms/InputLocation';
 import ErrorMessage from '../shared/ErrorMessage';
+import Line from '../shared/Line';
+
 import { setUserState } from '../../actions/userActions';
 
 const rightStyles = {
@@ -199,6 +201,8 @@ class Form extends Component {
             />
           </div>
         </div>
+
+        <Line />
 
         {
           !this.isDisabled() && (

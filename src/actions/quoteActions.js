@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import * as types from './actionTypes';
 
-const BASE = 'http://35.185.0.252/';
+const BASE = 'http://35.231.1.255/';
 
 export const getQuote = ({ lng, lat }) => { // eslint-disable-line
   return async (dispatch) => {

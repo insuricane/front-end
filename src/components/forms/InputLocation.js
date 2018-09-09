@@ -37,13 +37,13 @@ class InputLocation extends Component {
 
     const lat = place.geometry.location.lat();
     const lng = place.geometry.location.lng();
-    const { name } = place;
+    const { formatted_address } = place; // eslint-disable-line
     const { callback } = this.props;
 
     callback({
       lat,
       lng,
-      name,
+      name: formatted_address,
     });
   }
 
@@ -76,6 +76,7 @@ class InputLocation extends Component {
         type={type}
         placeholder={placeholder}
         handleChange={handleChange}
+        autocomplete={false}
         id="location"
       />
     );

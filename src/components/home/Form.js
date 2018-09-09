@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Input from '../forms/Input';
 import InputLocation from '../forms/InputLocation';
+import ErrorMessage from '../shared/ErrorMessage';
 
 const rightStyles = {
   width: '100%',
@@ -13,6 +14,12 @@ const btnStyles = {
   padding: '0.4rem 0.8rem',
 };
 
+const validEmail = (email) => {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line
+
+  return re.test(String(email).toLowerCase());
+};
+
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +30,7 @@ class Form extends Component {
       assetsValue: 0,
       address: '',
       location: {},
+      email: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -38,6 +46,7 @@ class Form extends Component {
       assetsValue,
       address,
       location,
+      email,
     } = this.state;
 
     return !(
@@ -48,6 +57,7 @@ class Form extends Component {
       && location
       && location.lat
       && location.lng
+      && email
     );
   }
 
@@ -78,6 +88,17 @@ class Form extends Component {
 
     if (this.isDisabled()) return;
 
+    this.setState({ error: '' });
+
+    const { email } = this.state;
+
+    if (!validEmail(email)) {
+      this.setState({
+        error: 'Please enter a valid email',
+      });
+      return;
+    }
+
     console.log('SUBMITTED', this.state);
   }
 
@@ -88,10 +109,14 @@ class Form extends Component {
       assetsValue,
       address,
       location,
+      email,
+      error,
     } = this.state;
 
     return (
       <form onSubmit={this.handleSubmit}>
+        <ErrorMessage error={error} />
+
         <div className="row">
           <div className="col-12 col-md-6">
             <Input
@@ -114,6 +139,14 @@ class Form extends Component {
           </div>
         </div>
 
+        <Input
+          label="Email"
+          value={email}
+          name="email"
+          type="email"
+          handleChange={this.handleChange}
+        />
+
         <div className="row">
           <div className="col-12 col-md-6">
             <Input
@@ -127,7 +160,7 @@ class Form extends Component {
 
           <div className="col-12 col-md-6">
             <InputLocation
-              label="Address"
+              label="Property Address"
               value={address}
               name="address"
               type="text"

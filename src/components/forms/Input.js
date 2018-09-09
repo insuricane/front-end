@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 const inputStyles = {
   borderWidth: '2px',
+  padding: '0.5rem 0.75rem',
+  fontSize: '1rem',
+  height: 'auto',
 };
 
 const labelStyles = {
@@ -17,6 +20,7 @@ const Input = ({
   type,
   placeholder,
   handleChange,
+  autocomplete,
   id,
 }) => (
   <div className="form-group">
@@ -34,6 +38,7 @@ const Input = ({
       type={type}
       placeholder={placeholder}
       onChange={handleChange}
+      autoComplete={autocomplete ? '' : 'off'}
       id={id}
     />
   </div>
@@ -43,6 +48,7 @@ Input.defaultProps = {
   label: '',
   placeholder: '',
   id: '',
+  autocomplete: true,
 };
 
 Input.propTypes = {
@@ -53,6 +59,7 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
   id: PropTypes.string,
+  autocomplete: PropTypes.bool,
 };
 
 export default Input;

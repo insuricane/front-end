@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import Input from '../forms/Input';
 import InputLocation from '../forms/InputLocation';
 
+const btnStyles = {
+  marginBottom: '1rem',
+};
+
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -93,7 +97,7 @@ class Form extends Component {
           </div>
         </div>
 
-        <Link to="/forecast" class="btn btn-primary">
+        <Link to="/forecast" className="btn btn-primary" style={btnStyles}>
           Submit
         </Link>
 

@@ -2,26 +2,11 @@ import React from 'react';
 
 import Form from './Form';
 
-const headerStyles = {
-  padding: '1rem 0rem',
-  textAlign: 'center',
-  borderBottom: '4px solid rgba(0, 0, 0, 0.1)',
-  marginBottom: '1rem',
-};
-
-const textStyles = {
-  marginBottom: '0',
-};
-
 const Home = () => (
   <div className="container">
     <div className="row">
       <div className="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
         <div className="home">
-          <div style={headerStyles}>
-            <h1>Insuricane</h1>
-            <p style={textStyles}>An emergency short-term home insurance product for hurricanes</p>
-          </div>
           <Form />
           <iframe
             title="docusign"

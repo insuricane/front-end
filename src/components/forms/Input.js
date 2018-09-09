@@ -1,6 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const inputStyles = {
+  borderWidth: '2px',
+};
+
+const labelStyles = {
+  fontSize: '0.8em',
+  marginBottom: '0.4em',
+};
+
 const Input = ({
   label,
   value,
@@ -12,12 +21,13 @@ const Input = ({
 }) => (
   <div className="form-group">
     {label && (
-      <label htmlFor={name}>
+      <label htmlFor={name} style={labelStyles}>
         { label }
       </label>
     )}
 
     <input
+      style={inputStyles}
       className="form-control"
       value={value}
       name={name}

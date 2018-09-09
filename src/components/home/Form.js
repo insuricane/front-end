@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+
 import Input from '../forms/Input';
 import InputLocation from '../forms/InputLocation';
 import ErrorMessage from '../shared/ErrorMessage';
+import { setUserState } from '../../actions/userActions';
 
 const rightStyles = {
   width: '100%',
@@ -90,7 +95,14 @@ class Form extends Component {
 
     this.setState({ error: '' });
 
-    const { email } = this.state;
+    const {
+      email,
+      firstName,
+      lastName,
+      location,
+      address,
+      assetsValue,
+    } = this.state;
 
     if (!validEmail(email)) {
       this.setState({
@@ -99,10 +111,29 @@ class Form extends Component {
       return;
     }
 
-    console.log('SUBMITTED', this.state);
+    const {
+      dispatchSetUserState,
+    } = this.props;
+
+    dispatchSetUserState({
+      email,
+      firstName,
+      lastName,
+      location,
+      address,
+      assetsValue,
+    });
   }
 
   render() {
+    const {
+      userLocation,
+    } = this.props;
+
+    if (userLocation && userLocation.lat && userLocation.lng) {
+      return (<Redirect to="/forecast" />);
+    }
+
     const {
       firstName,
       lastName,
@@ -196,4 +227,24 @@ class Form extends Component {
   }
 }
 
-export default Form;
+const mapStateToProps = ({ userState }) => ({
+  userLocation: userState.location,
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatchSetUserState: state => dispatch(setUserState(state)),
+});
+
+Form.propTypes = {
+  userLocation: PropTypes.shape({
+    lng: PropTypes.number,
+    lat: PropTypes.number,
+  }).isRequired,
+  dispatchSetUserState: PropTypes.func.isRequired,
+};
+
+// Redux config
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Form);

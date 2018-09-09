@@ -1,2 +1,7 @@
 // User actions
-export const SET_USER_STATE = 'SET_USER_STATE'; // eslint-disable-line
+export const SET_USER_STATE = 'SET_USER_STATE';
+
+// Quote actions
+export const GET_QUOTE_REQUESTED = 'GET_QUOTE_REQUESTED';
+export const GET_QUOTE_REJECTED = 'GET_QUOTE_REJECTED';
+export const GET_QUOTE_RESOLVED = 'GET_QUOTE_RESOLVED';

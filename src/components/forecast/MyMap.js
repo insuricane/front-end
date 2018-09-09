@@ -1,23 +1,59 @@
 import React, { Component } from 'react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import path from './path';
 import cone from './cone';
 import './leaflet-providers';
 
-export default class MyMap extends Component {
+const mapStyles = {
+  height: '500px',
+  width: '100%',
+};
+
+const BLACK = '#000';
+const RED = '#FF5252';
+
+const geojsonMarkerOptions = {
+  radius: 2.5,
+  fillColor: RED,
+  color: BLACK,
+  weight: 1,
+  opacity: 1,
+  fillOpacity: 0.8,
+};
+
+const houseMarkerStyles = {
+  radius: 6,
+  fillColor: BLACK,
+  color: BLACK,
+  weight: 1,
+  opacity: 1,
+  fillOpacity: 0.8,
+};
+
+const onEachFeature = (feature, layer) => {
+  // does this feature have a property named popupContent?
+  if (feature.properties && feature.properties.popupContent) {
+    layer.bindPopup(feature.properties.popupContent);
+  }
+};
+
+class Map extends Component {
   componentDidMount() {
+    const {
+      location: {
+        lng,
+        lat,
+      },
+    } = this.props;
+
     const map = L.map('map', {
-      center: [24.8, -81.2],
+      center: [lat, lng],
       zoom: 5,
     });
-
-    function onEachFeature(feature, layer) {
-      // does this feature have a property named popupContent?
-      if (feature.properties && feature.properties.popupContent) {
-        layer.bindPopup(feature.properties.popupContent);
-      }
-    }
 
     L.tileLayer(
       'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
@@ -32,15 +68,6 @@ export default class MyMap extends Component {
     ).addTo(map);
 
     L.tileLayer.provider('CartoDB.Voyager').addTo(map);
-
-    const geojsonMarkerOptions = {
-      radius: 2.5,
-      fillColor: '#FF5252',
-      color: '#000',
-      weight: 1,
-      opacity: 1,
-      fillOpacity: 0.8,
-    };
 
     // Path
     L.geoJSON(path, {
@@ -68,32 +95,38 @@ export default class MyMap extends Component {
       type: 'Feature',
       properties: {
         name: 'Home',
-        popupContent: 'Chance of damage: 86%',
       },
       geometry: {
         type: 'Point',
-        coordinates: [-81.99404, 29.75621],
+        coordinates: [lng, lat],
       },
-    };
-
-    const geojsonMarkerOptions2 = {
-      radius: 6,
-      fillColor: '#000000',
-      color: '#000',
-      weight: 1,
-      opacity: 1,
-      fillOpacity: 0.8,
     };
 
     L.geoJSON(geojsonFeature, {
       onEachFeature,
       pointToLayer(feature, latlng) {
-        return L.circleMarker(latlng, geojsonMarkerOptions2);
+        return L.circleMarker(latlng, houseMarkerStyles);
       },
     }).addTo(map);
   }
 
   render() {
-    return <div id="map" style={{ height: '500px', width: '100%' }} />;
+    return <div id="map" style={mapStyles} />;
   }
 }
+
+const mapStateToProps = ({ userState }) => ({
+  location: userState.location,
+});
+
+Map.propTypes = {
+  location: PropTypes.shape({
+    lng: PropTypes.number,
+    lat: PropTypes.number,
+  }).isRequired,
+};
+
+// Redux config
+export default connect(
+  mapStateToProps,
+)(Map);

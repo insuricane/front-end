@@ -139,7 +139,6 @@ class Form extends Component {
       lastName,
       assetsValue,
       address,
-      location,
       email,
       error,
     } = this.state;
@@ -214,14 +213,6 @@ class Form extends Component {
             </div>
           )
         }
-
-        {location && location.lat && location.lng ? (
-          <p>
-            {location.lat}
-            ,&nbsp;
-            {location.lng}
-          </p>
-        ) : null}
       </form>
     );
   }

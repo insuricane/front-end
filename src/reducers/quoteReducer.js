@@ -22,6 +22,7 @@ const userReducer = (state = initialState.userState, action) => {
       return {
         probDestruction: action.data.house_destroyed,
         positions: action.data.positions,
+        factor: action.data.avg_factor,
         loading: false,
       };
 

@@ -6,11 +6,16 @@ import { getQuote } from '../../actions/quoteActions';
 
 import ErrorMessage from '../shared/ErrorMessage';
 import Portfolio from './Portfolio';
+import Line from '../shared/Line';
 
 const getPercent = (probability) => {
   const percentNum = Number(probability) * 100;
 
   return `${percentNum.toFixed(3)}%`;
+};
+
+const floatStyles = {
+  float: 'right',
 };
 
 class ForecastInfo extends Component {
@@ -29,6 +34,8 @@ class ForecastInfo extends Component {
       quoteError,
       probDestruction,
       loading,
+      factor,
+      firstName,
     } = this.props;
 
     if (loading) return (<p>Loading...</p>);
@@ -36,11 +43,19 @@ class ForecastInfo extends Component {
     return (
       <div>
         <p>
+          <i>
+            Hi&nbsp;
+            {firstName}
+            , here&#39;s what we came up with:
+          </i>
+        </p>
+        <p>
           <strong>Policy value:</strong>
-          &nbsp;
-          $
-          {assetsValue}
-          &nbsp;USD
+          <span style={floatStyles}>
+            $
+            {Number(assetsValue).toFixed(2)}
+            &nbsp;USD
+          </span>
         </p>
 
         <ErrorMessage error={quoteError} />
@@ -49,13 +64,25 @@ class ForecastInfo extends Component {
           !quoteError && (
             <div>
               <p>
-                <strong>Probability of destruction:</strong>
-                &nbsp;
-                {getPercent(probDestruction)}
+                <strong>Down payment:</strong>
+                <span style={floatStyles}>
+                  $
+                  {(factor * Number(assetsValue)).toFixed(2)}
+                  &nbsp;USD
+                </span>
               </p>
 
               <p>
-                <strong>Hedging portfolio:</strong>
+                <strong>Probability of destruction:</strong>
+                <span style={floatStyles}>
+                  {getPercent(probDestruction)}
+                </span>
+              </p>
+
+              <Line />
+
+              <p>
+                <i>Or, try hedging yourself:</i>
               </p>
               <Portfolio />
             </div>
@@ -72,6 +99,8 @@ const mapStateToProps = ({ userState, quoteState }) => ({
   quoteError: quoteState.error,
   loading: quoteState.loading,
   probDestruction: quoteState.probDestruction,
+  factor: quoteState.factor,
+  firstName: userState.firstName,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -82,6 +111,7 @@ ForecastInfo.defaultProps = {
   quoteError: '',
   probDestruction: 0,
   loading: false,
+  factor: 1,
 };
 
 ForecastInfo.propTypes = {
@@ -94,6 +124,8 @@ ForecastInfo.propTypes = {
   quoteError: PropTypes.string,
   probDestruction: PropTypes.number,
   loading: PropTypes.bool,
+  factor: PropTypes.number,
+  firstName: PropTypes.string.isRequired,
 };
 
 // Redux config

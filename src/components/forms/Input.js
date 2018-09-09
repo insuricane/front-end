@@ -6,6 +6,7 @@ const inputStyles = {
   padding: '0.5rem 0.75rem',
   fontSize: '1rem',
   height: 'auto',
+  marginBottom: '1rem',
 };
 
 const labelStyles = {

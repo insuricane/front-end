@@ -10,5 +10,6 @@ export default {
     house_destroyed: 0,
     positions: {},
     loading: true,
+    factor: 1,
   },
 };

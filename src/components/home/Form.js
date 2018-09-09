@@ -24,10 +24,7 @@ class Form extends Component {
   }
 
   handleChange(event) {
-    const {
-      name,
-      value,
-    } = event.target;
+    const { name, value } = event.target;
 
     this.setState({
       [name]: value,
@@ -36,7 +33,10 @@ class Form extends Component {
 
   handleChangeLocation(lat, lng, address) {
     this.setState({
-      location: { lat, lng },
+      location: {
+        lat,
+        lng,
+      },
       address,
     });
   }
@@ -101,18 +101,13 @@ class Form extends Component {
           Submit
         </Link>
 
-        {
-          (location && location.lat && location.lng) ? (
-            <p>
-              {location.lat}
-              ,
-              {location.lng}
-            </p>
-          ) : (
-            null
-          )
-        }
-
+        {location && location.lat && location.lng ? (
+          <p>
+            {location.lat}
+            ,&nbsp;
+            {location.lng}
+          </p>
+        ) : null}
       </form>
     );
   }

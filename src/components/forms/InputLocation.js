@@ -7,7 +7,6 @@ import Input from './Input';
 class InputLocation extends Component {
   constructor(props) {
     super(props);
-
     this.initAutocomplete = this.initAutocomplete.bind(this);
     this.waitForGoogle = this.waitForGoogle.bind(this);
     this.handlePlaceChange = this.handlePlaceChange.bind(this);
@@ -28,7 +27,6 @@ class InputLocation extends Component {
 
   handlePlaceChange(autocomplete) {
     const place = autocomplete.getPlace();
-
     if (!(
       place
       && place.geometry
@@ -40,7 +38,6 @@ class InputLocation extends Component {
     const lat = place.geometry.location.lat();
     const lng = place.geometry.location.lng();
     const { name } = place;
-
     const { callback } = this.props;
 
     callback({
@@ -52,12 +49,10 @@ class InputLocation extends Component {
 
   initAutocomplete() {
     const location = document.getElementById('location');
-
     const options = {
       componentRestrictions: { country: 'us' },
       types: ['address'],
     };
-
     const autocomplete = new google.maps.places.Autocomplete(location, options);
 
     google.maps.event.addListener(autocomplete, 'place_changed', () => this.handlePlaceChange(autocomplete));

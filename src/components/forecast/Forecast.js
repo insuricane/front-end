@@ -4,22 +4,17 @@ import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 
 import MyMap from './MyMap';
+import ForecastInfo from './ForecastInfo';
 import Container from '../shared/Container';
 
-const Forecast = ({ location, assetsValue }) => {
+const Forecast = ({ location }) => {
   if (!(location && location.lat && location.lng)) {
     return (<Redirect to="/" />);
   }
 
   return (
     <Container>
-      <p>
-        Policy value:
-        {assetsValue}
-      </p>
-
-      <p>Probability of destruction: TODO</p>
-      <p>Hedging portfolio: TODO</p>
+      <ForecastInfo />
 
       <MyMap />
 
@@ -31,12 +26,7 @@ const Forecast = ({ location, assetsValue }) => {
 };
 
 const mapStateToProps = ({ userState }) => ({
-  firstName: userState.firstName,
-  lastName: userState.lastName,
-  email: userState.email,
-  address: userState.address,
   location: userState.location,
-  assetsValue: userState.assetsValue,
 });
 
 Forecast.propTypes = {
@@ -44,7 +34,6 @@ Forecast.propTypes = {
     lng: PropTypes.number,
     lat: PropTypes.number,
   }).isRequired,
-  assetsValue: PropTypes.number.isRequired,
 };
 
 // Redux config

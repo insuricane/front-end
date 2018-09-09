@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Input from '../forms/Input';
 import InputLocation from '../forms/InputLocation';
 
+const rightStyles = {
+  width: '100%',
+  textAlign: 'right',
+};
+
 const btnStyles = {
   marginBottom: '1rem',
+  textAlign: 'center',
+  padding: '0.4rem 0.8rem',
 };
 
 class Form extends Component {
@@ -20,7 +26,29 @@ class Form extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeLocation = this.handleChangeLocation.bind(this);
+    this.isDisabled = this.isDisabled.bind(this);
+  }
+
+  isDisabled() {
+    const {
+      firstName,
+      lastName,
+      assetsValue,
+      address,
+      location,
+    } = this.state;
+
+    return !(
+      firstName
+      && lastName
+      && assetsValue > 0
+      && address
+      && location
+      && location.lat
+      && location.lng
+    );
   }
 
   handleChange(event) {
@@ -31,14 +59,26 @@ class Form extends Component {
     });
   }
 
-  handleChangeLocation(lat, lng, address) {
+  handleChangeLocation({ lat, lng, name }) {
+    const {
+      address,
+    } = this.state;
+
     this.setState({
       location: {
         lat,
         lng,
       },
-      address,
+      address: name || address,
     });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    if (this.isDisabled()) return;
+
+    console.log('SUBMITTED', this.state);
   }
 
   render() {
@@ -51,7 +91,7 @@ class Form extends Component {
     } = this.state;
 
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <div className="row">
           <div className="col-12 col-md-6">
             <Input
@@ -77,7 +117,7 @@ class Form extends Component {
         <div className="row">
           <div className="col-12 col-md-6">
             <Input
-              label="Home Value (USD)"
+              label="Policy Value (USD)"
               value={assetsValue}
               name="assetsValue"
               type="number"
@@ -97,9 +137,19 @@ class Form extends Component {
           </div>
         </div>
 
-        <Link to="/forecast" className="btn btn-primary" style={btnStyles}>
-          Submit
-        </Link>
+        {
+          !this.isDisabled() && (
+            <div style={rightStyles}>
+              <button
+                type="submit"
+                className="btn btn-light"
+                style={btnStyles}
+              >
+                Continue &rarr;
+              </button>
+            </div>
+          )
+        }
 
         {location && location.lat && location.lng ? (
           <p>

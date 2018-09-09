@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './home/Home';
-import Forecast from './Forecast';
+import Forecast from './forecast/Forecast';
 import About from './about/About';
 import Header from './header/Header';
 import Footer from './footer/Footer';

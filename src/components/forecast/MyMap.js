@@ -3,6 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import path from './path';
 import cone from './cone';
+import './leaflet-providers';
 
 export default class MyMap extends Component {
   componentDidMount() {
@@ -29,6 +30,8 @@ export default class MyMap extends Component {
           'pk.eyJ1IjoiYW5kcmV3Y3VpIiwiYSI6ImNqazNkZWY0bjBodXQzbHRoN3QzdjQ2bGQifQ.B_6mN1CgDJrz2_mSjGGaOQ',
       },
     ).addTo(map);
+
+    L.tileLayer.provider('CartoDB.Voyager').addTo(map);
 
     const geojsonMarkerOptions = {
       radius: 2.5,
